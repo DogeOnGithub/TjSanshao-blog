@@ -63,7 +63,7 @@ class Blog extends ShouldUpdateComp {
             const data = await Blogs.getBlogData();
             if(data){
                 this.setState({
-                    ...data
+                    articleList: data
                 })
             }
         }catch (e) {

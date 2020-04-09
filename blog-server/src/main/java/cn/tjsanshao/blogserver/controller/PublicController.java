@@ -1,5 +1,7 @@
 package cn.tjsanshao.blogserver.controller;
 
+import cn.hutool.core.date.DateUtil;
+import cn.tjsanshao.blogserver.model.Article;
 import cn.tjsanshao.blogserver.model.Banner;
 import cn.tjsanshao.blogserver.model.MainCard;
 import cn.tjsanshao.blogserver.model.SortCard;
@@ -57,5 +59,21 @@ public class PublicController {
         res.put("tagsList", tags);
         res.put("sortCardList", sortCardList);
         return JSON.toJSONString(res);
+    }
+
+    @RequestMapping("/public/blog")
+    public String blog() {
+        ArrayList<Article> articles = new ArrayList<>();
+        String[] tags = {"Vue", "javascript", "html", "scss"};
+        Article article = new Article();
+        article.setTitle("基于electron的音视频播放器");
+        article.setContent("基于electron的音视频播放器前言选择做一个音视频播放器桌面应用程序原因技术的选型已经实现了的功能音视频播放实现右键菜单实现");
+        article.setTime(DateUtil.date());
+        article.setImageSrc("http://q80ates4m.bkt.clouddn.com/image/blog-electron.jpg");
+        article.setBlogSrc("https://blog.csdn.net/vgub158/article/details/91490185");
+        article.setTags(tags);
+        articles.add(article);
+
+        return JSON.toJSONString(articles);
     }
 }

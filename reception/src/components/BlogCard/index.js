@@ -1,5 +1,7 @@
 import React, {useCallback,memo} from 'react';
 
+import moment from 'moment';
+
 import PropTypes from 'prop-types'
 
 import Tags from "../Tags";
@@ -13,6 +15,7 @@ const BlogCard = (props) => {
             onClick(blogSrc);
         }
     }, [onClick,blogSrc]);
+    const dateFormat = date => moment(date).format('YYYY-MM-DD');
     const classname = `blog-card-item blog-card-item-${type}`;
     return (
         <div className={classname} onClick={itemClick}>
@@ -22,7 +25,7 @@ const BlogCard = (props) => {
                     {content}
                 </p>
                 <Tags tagsList={tags}/>
-                <div className={'time'}>{time}</div>
+                <div className={'time'}>{dateFormat(time)}</div>
             </div>
             <div className={'blog-right'} style={{'backgroundImage': `url("${imageSrc}")`}}/>
         </div>
