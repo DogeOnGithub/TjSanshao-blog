@@ -53,7 +53,7 @@ class About extends React.Component{
             const data = await Abouts.getAboutData();
             if(data){
                 this.setState({
-                    ...data
+                    aboutImage: data
                 })
             }
         }catch (e) {
