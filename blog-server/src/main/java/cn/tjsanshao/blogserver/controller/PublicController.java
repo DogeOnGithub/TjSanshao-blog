@@ -2,6 +2,7 @@ package cn.tjsanshao.blogserver.controller;
 
 import cn.tjsanshao.blogserver.model.Banner;
 import cn.tjsanshao.blogserver.model.MainCard;
+import cn.tjsanshao.blogserver.model.SortCard;
 import com.alibaba.fastjson.JSON;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +44,18 @@ public class PublicController {
     @RequestMapping("/public/about")
     public String about() {
         return "http://q80ates4m.bkt.clouddn.com/image/blog-img.jpg";
+    }
+
+    @RequestMapping("/public/other")
+    public String other() {
+        String[] tags = {"Java", "javascript", "Vue"};
+
+        ArrayList<SortCard> sortCardList = new ArrayList<>();
+        sortCardList.add(new SortCard().setImageSrc("http://q80ates4m.bkt.clouddn.com/image/github.jpg").setSrc("https://github.com/TjSanshao"));
+
+        HashMap<String, Object> res = new HashMap<>();
+        res.put("tagsList", tags);
+        res.put("sortCardList", sortCardList);
+        return JSON.toJSONString(res);
     }
 }
