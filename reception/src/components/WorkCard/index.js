@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import './work-card.scss';
 
 const WorkCard = (props) => {
-    const {tags, title, abstract, functions, imageSrc, workSrc, onItemClick} = props;
+    const {tags, title, summary, functions, imageSrc, workSrc, onItemClick} = props;
     const onClick = useCallback(() => {
         if (onItemClick) {
             onItemClick(workSrc)
@@ -20,7 +20,7 @@ const WorkCard = (props) => {
             <div className={'work-card-describe'}>
                 <Tags tagsList={tags}/>
                 <p className={'work-card-title'}>{title}</p>
-                <p className={'work-card-abstract'}>{abstract}</p>
+                <p className={'work-card-abstract'}>{summary}</p>
                 <ul className={'work-card-function'}>
                     {functions.map((item, index) => <li key={index}>{item}</li>)}
                 </ul>
@@ -32,7 +32,7 @@ const WorkCard = (props) => {
 WorkCard.propTypes = {
     tags: PropTypes.array.isRequired,
     title: PropTypes.string.isRequired,
-    abstract: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
     functions: PropTypes.array.isRequired,
     workSrc: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,

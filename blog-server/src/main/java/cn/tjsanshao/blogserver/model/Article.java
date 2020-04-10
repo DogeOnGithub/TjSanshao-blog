@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * article
@@ -27,7 +28,7 @@ public class Article implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
-    private String[] tags;
+    private List<String> tags;
 
     private String imageSrc;
 

@@ -36,7 +36,7 @@ class Works extends ShouldUpdateComp{
         try{
             const data = await Work.getWorkData();
             this.setState({
-                ...data
+                workList: data
             })
         }catch (e) {
 

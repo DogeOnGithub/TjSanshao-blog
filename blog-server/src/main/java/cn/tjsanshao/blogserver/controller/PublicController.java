@@ -5,6 +5,7 @@ import cn.tjsanshao.blogserver.model.Article;
 import cn.tjsanshao.blogserver.model.Banner;
 import cn.tjsanshao.blogserver.model.MainCard;
 import cn.tjsanshao.blogserver.model.SortCard;
+import cn.tjsanshao.blogserver.model.Works;
 import com.alibaba.fastjson.JSON;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * public
@@ -64,7 +66,10 @@ public class PublicController {
     @RequestMapping("/public/blog")
     public String blog() {
         ArrayList<Article> articles = new ArrayList<>();
-        String[] tags = {"Vue", "javascript", "html", "scss"};
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("html");
+        tags.add("javascript");
+        tags.add("electron");
         Article article = new Article();
         article.setTitle("基于electron的音视频播放器");
         article.setContent("基于electron的音视频播放器前言选择做一个音视频播放器桌面应用程序原因技术的选型已经实现了的功能音视频播放实现右键菜单实现");
@@ -75,5 +80,23 @@ public class PublicController {
         articles.add(article);
 
         return JSON.toJSONString(articles);
+    }
+
+    @RequestMapping("/public/works")
+    public String works() {
+        ArrayList<Works> worksList = new ArrayList<>();
+        Works works = new Works();
+        works.setTitle("player");
+        works.setSummary("electron-vue音视频播放器");
+        List<String> tags = new ArrayList<>();
+        tags.add("electron");
+        works.setTags(tags);
+        ArrayList<String> functions = new ArrayList<>();
+        functions.add("视频播放：目前已经支持大多数视频格式，比如 MP4、WebM、mkv、avi、WMV、FLV、rmvb 等，后续会添加更多的视频格式");
+        works.setFunctions(functions);
+        works.setImageSrc("http://q80ates4m.bkt.clouddn.com/image/player.png");
+        works.setWorksSrc("https://github.com/c10342/player");
+        worksList.add(works);
+        return JSON.toJSONString(worksList);
     }
 }
