@@ -5,14 +5,11 @@ import Http from "../utils/Http";
 
 class Comment {
     static async getCommentList(currentPage=1,pageSize=10){
-        const data = await Http.get('/api/comment/getMsgList',{
+        const data = await Http.get('/public/comment/list',{
             currentPage,
             pageSize
         });
-        if(data.statusCode === 200){
-            return data.data
-        }
-        return null;
+        return data ? data : null;
     }
 
     static async publishComment(content,nickName){

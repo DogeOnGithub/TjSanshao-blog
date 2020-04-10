@@ -3,6 +3,7 @@ package cn.tjsanshao.blogserver.controller;
 import cn.hutool.core.date.DateUtil;
 import cn.tjsanshao.blogserver.model.Article;
 import cn.tjsanshao.blogserver.model.Banner;
+import cn.tjsanshao.blogserver.model.Comment;
 import cn.tjsanshao.blogserver.model.MainCard;
 import cn.tjsanshao.blogserver.model.SortCard;
 import cn.tjsanshao.blogserver.model.Works;
@@ -98,5 +99,17 @@ public class PublicController {
         works.setWorksSrc("https://github.com/c10342/player");
         worksList.add(works);
         return JSON.toJSONString(worksList);
+    }
+
+    @RequestMapping("/public/comment/publish")
+    public String publishComment(Comment comment) {
+        return "success";
+    }
+
+    @RequestMapping("/public/comment/list")
+    public String comment() {
+        ArrayList<Comment> commentList = new ArrayList<>();
+        commentList.add(new Comment().setNickName("TjSanshao").setContent("comment").setCreateAt(DateUtil.date()).setUpdateAt(DateUtil.date()));
+        return JSON.toJSONString(commentList);
     }
 }

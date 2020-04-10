@@ -100,7 +100,7 @@ class Message extends ShouldUpdateComp {
             });
             const list = await Comment.getCommentList(this.currentPage, this.pageSize);
             if (list) {
-                let msgList = list.rows;
+                let msgList = list;
                 this.setState({
                     count: list.count,
                     msgList: msgList,
