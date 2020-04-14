@@ -1,17 +1,19 @@
 package cn.tjsanshao.blogserver.controller;
 
 import cn.hutool.core.date.DateUtil;
-import cn.tjsanshao.blogserver.model.Article;
-import cn.tjsanshao.blogserver.model.Banner;
-import cn.tjsanshao.blogserver.model.Comment;
-import cn.tjsanshao.blogserver.model.MainCard;
-import cn.tjsanshao.blogserver.model.SortCard;
-import cn.tjsanshao.blogserver.model.Works;
+import cn.tjsanshao.blogserver.service.MainService;
+import cn.tjsanshao.blogserver.view.Article;
+import cn.tjsanshao.blogserver.view.Banner;
+import cn.tjsanshao.blogserver.view.Comment;
+import cn.tjsanshao.blogserver.view.MainCard;
+import cn.tjsanshao.blogserver.view.SortCard;
+import cn.tjsanshao.blogserver.view.Works;
 import com.alibaba.fastjson.JSON;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,9 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class PublicController {
+    @Resource
+    private MainService mainService;
+
     @RequestMapping("/public/hello")
     public String hello() {
         return "Hello World!";
@@ -32,17 +37,9 @@ public class PublicController {
 
     @RequestMapping("/public/home")
     public String home() {
-        ArrayList<Banner> bannerList = new ArrayList<>();
-        bannerList.add(new Banner().setImageSrc("http://q80ates4m.bkt.clouddn.com/image/banner1.jpg"));
-        bannerList.add(new Banner().setImageSrc("http://q80ates4m.bkt.clouddn.com/image/banner2.jpg"));
-        bannerList.add(new Banner().setImageSrc("http://q80ates4m.bkt.clouddn.com/image/banner3.jpg"));
-
-        ArrayList<MainCard> mainCardList = new ArrayList<>();
-        mainCardList.add(new MainCard().setTitle("My Blog").setDescribe("Desc").setImage("http://q80ates4m.bkt.clouddn.com/image/blog-img.jpg").setButton("Click to scan my blog").setItemKey("Blog"));
-
         HashMap<String, Object> res = new HashMap<>();
-        res.put("bannerList", bannerList);
-        res.put("mainCardList", mainCardList);
+        res.put("bannerList", mainService.banner());
+        res.put("mainCardList", mainService.mainCard());
         return JSON.toJSONString(res);
     }
 

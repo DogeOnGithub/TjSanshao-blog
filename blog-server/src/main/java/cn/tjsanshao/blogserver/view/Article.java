@@ -1,4 +1,4 @@
-package cn.tjsanshao.blogserver.model;
+package cn.tjsanshao.blogserver.view;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

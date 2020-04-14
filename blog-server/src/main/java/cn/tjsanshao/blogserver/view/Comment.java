@@ -1,4 +1,4 @@
-package cn.tjsanshao.blogserver.model;
+package cn.tjsanshao.blogserver.view;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
