@@ -2,6 +2,7 @@ package cn.tjsanshao.blogserver.controller;
 
 import cn.hutool.core.date.DateUtil;
 import cn.tjsanshao.blogserver.service.MainService;
+import cn.tjsanshao.blogserver.service.OtherService;
 import cn.tjsanshao.blogserver.view.Article;
 import cn.tjsanshao.blogserver.view.Banner;
 import cn.tjsanshao.blogserver.view.Comment;
@@ -29,6 +30,8 @@ import java.util.List;
 public class PublicController {
     @Resource
     private MainService mainService;
+    @Resource
+    private OtherService otherService;
 
     @RequestMapping("/public/hello")
     public String hello() {
@@ -50,14 +53,12 @@ public class PublicController {
 
     @RequestMapping("/public/other")
     public String other() {
-        String[] tags = {"Java", "javascript", "Vue"};
-
-        ArrayList<SortCard> sortCardList = new ArrayList<>();
-        sortCardList.add(new SortCard().setImageSrc("http://q80ates4m.bkt.clouddn.com/image/github.jpg").setSrc("https://github.com/TjSanshao"));
+        List<SortCard> sortCards = otherService.sortCards();
+        sortCards.add(new SortCard().setImageSrc("http://q80ates4m.bkt.clouddn.com/image/github.jpg").setSrc("https://github.com/TjSanshao"));
 
         HashMap<String, Object> res = new HashMap<>();
-        res.put("tagsList", tags);
-        res.put("sortCardList", sortCardList);
+        res.put("tagsList", otherService.tags);
+        res.put("sortCardList", sortCards);
         return JSON.toJSONString(res);
     }
 

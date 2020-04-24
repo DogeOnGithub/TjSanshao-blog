@@ -1,25 +1,27 @@
-package cn.tjsanshao.blogserver.view;
+package cn.tjsanshao.blogserver.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * other page
+ * sort card
  *
  * @author TjSanshao
- * @date 2020-04-09 16:30
+ * @date 2020-04-23 10:05
  */
 @Data
 @Accessors(chain = true)
 public class SortCard implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @TableId(type = IdType.AUTO)
+    private Long id;
+
     private String imageSrc;
 
     private String src;
-
-    private List<String> tags;
 }
