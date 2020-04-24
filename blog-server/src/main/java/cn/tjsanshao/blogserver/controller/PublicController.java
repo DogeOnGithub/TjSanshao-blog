@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.tjsanshao.blogserver.service.BlogService;
 import cn.tjsanshao.blogserver.service.MainService;
 import cn.tjsanshao.blogserver.service.OtherService;
+import cn.tjsanshao.blogserver.service.WorksService;
 import cn.tjsanshao.blogserver.view.Article;
 import cn.tjsanshao.blogserver.view.Comment;
 import cn.tjsanshao.blogserver.view.SortCard;
@@ -33,6 +34,8 @@ public class PublicController {
     private OtherService otherService;
     @Resource
     private BlogService blogService;
+    @Resource
+    private WorksService worksService;
 
     @RequestMapping("/public/hello")
     public String hello() {
@@ -84,7 +87,7 @@ public class PublicController {
 
     @RequestMapping("/public/works")
     public String works() {
-        ArrayList<Works> worksList = new ArrayList<>();
+        List<Works> worksList = worksService.works();
         Works works = new Works();
         works.setTitle("player");
         works.setSummary("electron-vue音视频播放器");
