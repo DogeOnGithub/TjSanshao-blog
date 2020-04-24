@@ -1,12 +1,11 @@
 package cn.tjsanshao.blogserver.controller;
 
 import cn.hutool.core.date.DateUtil;
+import cn.tjsanshao.blogserver.service.BlogService;
 import cn.tjsanshao.blogserver.service.MainService;
 import cn.tjsanshao.blogserver.service.OtherService;
 import cn.tjsanshao.blogserver.view.Article;
-import cn.tjsanshao.blogserver.view.Banner;
 import cn.tjsanshao.blogserver.view.Comment;
-import cn.tjsanshao.blogserver.view.MainCard;
 import cn.tjsanshao.blogserver.view.SortCard;
 import cn.tjsanshao.blogserver.view.Works;
 import com.alibaba.fastjson.JSON;
@@ -32,6 +31,8 @@ public class PublicController {
     private MainService mainService;
     @Resource
     private OtherService otherService;
+    @Resource
+    private BlogService blogService;
 
     @RequestMapping("/public/hello")
     public String hello() {
@@ -64,7 +65,7 @@ public class PublicController {
 
     @RequestMapping("/public/blog")
     public String blog() {
-        ArrayList<Article> articles = new ArrayList<>();
+        List<Article> articles = blogService.articles();
         ArrayList<String> tags = new ArrayList<>();
         tags.add("html");
         tags.add("javascript");
