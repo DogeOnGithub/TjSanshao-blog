@@ -1,7 +1,9 @@
 package cn.tjsanshao.blogserver.controller;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.tjsanshao.blogserver.service.BlogService;
+import cn.tjsanshao.blogserver.service.CommentService;
 import cn.tjsanshao.blogserver.service.MainService;
 import cn.tjsanshao.blogserver.service.OtherService;
 import cn.tjsanshao.blogserver.service.WorksService;
@@ -11,6 +13,7 @@ import cn.tjsanshao.blogserver.view.SortCard;
 import cn.tjsanshao.blogserver.view.Works;
 import com.alibaba.fastjson.JSON;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +39,8 @@ public class PublicController {
     private BlogService blogService;
     @Resource
     private WorksService worksService;
+    @Resource
+    private CommentService commentService;
 
     @RequestMapping("/public/hello")
     public String hello() {
@@ -104,14 +109,20 @@ public class PublicController {
     }
 
     @RequestMapping("/public/comment/publish")
-    public String publishComment(Comment comment) {
+    public String publishComment(@RequestBody Comment comment) {
+        DateTime now = DateUtil.date();
+        comment.setCreateAt(now);
+        comment.setUpdateAt(now);
+        boolean result = commentService.publishComment(comment);
+        if (!result) {
+            return "fail";
+        }
         return "success";
     }
 
     @RequestMapping("/public/comment/list")
-    public String comment() {
-        ArrayList<Comment> commentList = new ArrayList<>();
-        commentList.add(new Comment().setNickName("TjSanshao").setContent("comment").setCreateAt(DateUtil.date()).setUpdateAt(DateUtil.date()));
+    public String comment(Long current, Long  pageSize) {
+        List<Comment> commentList = commentService.comments(current, pageSize);
         return JSON.toJSONString(commentList);
     }
 }

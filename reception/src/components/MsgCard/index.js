@@ -25,7 +25,7 @@ const MsgCard = (props) =>{
 
 MsgCard.propTypes = {
     content:PropTypes.string.isRequired,
-    createAt:PropTypes.string.isRequired,
+    createAt:PropTypes.number.isRequired,
     nickName:PropTypes.string
 };
 

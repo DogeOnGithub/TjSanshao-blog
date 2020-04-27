@@ -33,7 +33,8 @@ class Message extends ShouldUpdateComp {
             count: 0,
             msgList: [],
             loading: false,
-            end: false
+            end: false,
+            reload: false
         };
         this.currentPage = 1;
         this.pageSize = 10;
@@ -100,12 +101,13 @@ class Message extends ShouldUpdateComp {
             });
             const list = await Comment.getCommentList(this.currentPage, this.pageSize);
             if (list) {
-                let msgList = list;
+                let msgList = this.state.reload ? list : this.state.msgList.concat(list);
                 this.setState({
                     count: list.count,
                     msgList: msgList,
                     end: msgList.length >= list.count,
-                    loading: false
+                    loading: false,
+                    reload: false
                 });
             }
         } catch (e) {
@@ -121,11 +123,14 @@ class Message extends ShouldUpdateComp {
         }
         const message = await Comment.publishComment(content, nickName);
         if (message) {
-            await this.getCommentList();
+            this.getCommentList(1, 10);
             Toast.success({content:message,duration:3000});
             this.setState({
                 content:'',
-                nickName:''
+                nickName:'',
+                currentPage: 1,
+                pageSize: 10,
+                reload: true
             })
         } else {
             Toast.error({content:'留言失败',duration:3000})

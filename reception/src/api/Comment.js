@@ -4,22 +4,19 @@ import Http from "../utils/Http";
 
 
 class Comment {
-    static async getCommentList(currentPage=1,pageSize=10){
+    static async getCommentList(current = 1,pageSize = 10){
         const data = await Http.get('/public/comment/list',{
-            currentPage,
+            current,
             pageSize
         });
         return data ? data : null;
     }
 
     static async publishComment(content,nickName){
-        const result = await Http.post('/api/comment/publishMsg',{
+        const result = await Http.post('/public/comment/publish',{
             content,nickName
         });
-        if(result.statusCode === 200){
-            return result.message;
-        }
-        return false;
+        return result;
     }
 }
 
