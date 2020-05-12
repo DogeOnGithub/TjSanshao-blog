@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const env = process.env.NODE_ENV;
 
-axios.defaults.baseURL= (env ==='development')?'http://127.0.0.1:9999':'http://120.79.209.208:9004';
+axios.defaults.baseURL= (env ==='development')?'http://120.78.135.16/':'http://120.79.209.208:9004';
 
 
 class Http {
