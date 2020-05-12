@@ -33,4 +33,6 @@ public class Works implements Serializable {
     private String imageSrc;
 
     private String worksSrc;
+
+    private Short deleteFlag;
 }

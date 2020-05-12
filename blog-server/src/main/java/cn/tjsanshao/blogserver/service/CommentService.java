@@ -33,7 +33,7 @@ public class CommentService {
     }
 
     public List<Comment> comments(long current, long pageSize) {
-        Page<cn.tjsanshao.blogserver.model.Comment> commentPage = commentRepository.selectPage(new Page<>(current, pageSize), new LambdaQueryWrapper<cn.tjsanshao.blogserver.model.Comment>().orderByDesc(cn.tjsanshao.blogserver.model.Comment::getCreateAt));
+        Page<cn.tjsanshao.blogserver.model.Comment> commentPage = commentRepository.selectPage(new Page<>(current, pageSize), new LambdaQueryWrapper<cn.tjsanshao.blogserver.model.Comment>().eq(true, cn.tjsanshao.blogserver.model.Comment::getDeleteFlag, 0).orderByDesc(cn.tjsanshao.blogserver.model.Comment::getCreateAt));
         return commentTransfer.fromModel2View(commentPage.getRecords());
     }
 }

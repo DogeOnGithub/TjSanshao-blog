@@ -35,4 +35,6 @@ public class Article implements Serializable {
     private String blogSrc;
 
     private String blogContent;
+
+    private Short deleteFlag;
 }

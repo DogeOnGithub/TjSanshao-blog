@@ -29,4 +29,6 @@ public class Comment implements Serializable {
     private Date createAt;
 
     private Date updateAt;
+
+    private Short deleteFlag;
 }

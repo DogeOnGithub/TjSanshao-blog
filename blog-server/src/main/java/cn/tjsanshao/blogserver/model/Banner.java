@@ -22,4 +22,6 @@ public class Banner implements Serializable {
     private Long id;
 
     private String imageSrc;
+
+    private Short deleteFlag;
 }

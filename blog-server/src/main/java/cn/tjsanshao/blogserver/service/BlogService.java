@@ -3,6 +3,7 @@ package cn.tjsanshao.blogserver.service;
 import cn.tjsanshao.blogserver.repository.ArticleRepository;
 import cn.tjsanshao.blogserver.transfer.ArticleTransfer;
 import cn.tjsanshao.blogserver.view.Article;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,7 @@ public class BlogService {
     private ArticleTransfer articleTransfer;
 
     public List<Article> articles() {
-        List<cn.tjsanshao.blogserver.model.Article> articles = articleRepository.selectList(null);
+        List<cn.tjsanshao.blogserver.model.Article> articles = articleRepository.selectList(new LambdaQueryWrapper<cn.tjsanshao.blogserver.model.Article>().eq(true, cn.tjsanshao.blogserver.model.Article::getDeleteFlag, 0));
         ArrayList<Article> viewArticles = new ArrayList<>();
         articles.forEach(a -> {
             Article article = articleTransfer.fromModel2View(a);

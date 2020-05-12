@@ -3,6 +3,7 @@ package cn.tjsanshao.blogserver.service;
 import cn.tjsanshao.blogserver.model.SortCard;
 import cn.tjsanshao.blogserver.repository.SortCardRepository;
 import cn.tjsanshao.blogserver.transfer.SortCardTransfer;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -39,7 +40,7 @@ public class OtherService {
     }
 
     public List<cn.tjsanshao.blogserver.view.SortCard> sortCards() {
-        List<SortCard> sortCards = sortCardRepository.selectList(null);
+        List<SortCard> sortCards = sortCardRepository.selectList(new LambdaQueryWrapper<SortCard>().eq(true, SortCard::getDeleteFlag, 0));
         return sortCardTransfer.fromModel2View(sortCards);
     }
 }

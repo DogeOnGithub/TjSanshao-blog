@@ -24,4 +24,6 @@ public class SortCard implements Serializable {
     private String imageSrc;
 
     private String src;
+
+    private Short deleteFlag;
 }

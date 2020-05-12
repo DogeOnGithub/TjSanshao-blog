@@ -4,6 +4,7 @@ import cn.tjsanshao.blogserver.repository.BannerRepository;
 import cn.tjsanshao.blogserver.transfer.BannerTransfer;
 import cn.tjsanshao.blogserver.view.Banner;
 import cn.tjsanshao.blogserver.view.MainCard;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,7 +30,7 @@ public class MainService {
         bannerList.add(new Banner().setImageSrc("http://q80ates4m.bkt.clouddn.com/image/banner1.jpg"));
         bannerList.add(new Banner().setImageSrc("http://q80ates4m.bkt.clouddn.com/image/banner2.jpg"));
         bannerList.add(new Banner().setImageSrc("http://q80ates4m.bkt.clouddn.com/image/banner3.jpg"));
-        bannerList.addAll(bannerTransfer.fromModel2View(bannerRepository.selectList(null)));
+        bannerList.addAll(bannerTransfer.fromModel2View(bannerRepository.selectList(new LambdaQueryWrapper<cn.tjsanshao.blogserver.model.Banner>().eq(true, cn.tjsanshao.blogserver.model.Banner::getDeleteFlag, 0))));
         return bannerList;
     }
 

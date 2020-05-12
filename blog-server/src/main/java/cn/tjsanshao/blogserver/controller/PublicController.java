@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * public
@@ -122,6 +123,10 @@ public class PublicController {
 
     @RequestMapping("/public/comment/list")
     public String comment(Long current, Long  pageSize) {
+        if (Objects.isNull(current)) {
+            current = 1L;
+            pageSize = 10L;
+        }
         List<Comment> commentList = commentService.comments(current, pageSize);
         return JSON.toJSONString(commentList);
     }
