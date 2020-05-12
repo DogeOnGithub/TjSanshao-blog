@@ -18,5 +18,10 @@ public interface ArticleTransfer {
     })
     Article fromModel2View(cn.tjsanshao.blogserver.model.Article article);
 
+    @Mappings({
+            @Mapping(source = "tags", target = "tags", ignore = true)
+    })
+    cn.tjsanshao.blogserver.model.Article fromView2Model(Article article);
+
     List<Article> fromModel2View(List<cn.tjsanshao.blogserver.model.Article> articles);
 }

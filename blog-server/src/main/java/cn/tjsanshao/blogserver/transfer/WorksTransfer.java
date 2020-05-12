@@ -16,4 +16,10 @@ public interface WorksTransfer {
             @Mapping(source = "functions", target = "functions", ignore = true)
     })
     Works fromModel2View(cn.tjsanshao.blogserver.model.Works works);
+
+    @Mappings({
+            @Mapping(source = "tags", target = "tags", ignore = true),
+            @Mapping(source = "functions", target = "functions", ignore = true)
+    })
+    cn.tjsanshao.blogserver.model.Works fromView2Model(Works works);
 }

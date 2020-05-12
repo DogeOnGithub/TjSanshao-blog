@@ -4,6 +4,7 @@ import cn.tjsanshao.blogserver.repository.ArticleRepository;
 import cn.tjsanshao.blogserver.transfer.ArticleTransfer;
 import cn.tjsanshao.blogserver.view.Article;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -34,5 +35,10 @@ public class BlogService {
             viewArticles.add(article);
         });
         return viewArticles;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void save(cn.tjsanshao.blogserver.model.Article article) {
+        articleRepository.insert(article);
     }
 }

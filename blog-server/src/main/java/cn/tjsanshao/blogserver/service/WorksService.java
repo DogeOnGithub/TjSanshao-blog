@@ -4,6 +4,7 @@ import cn.tjsanshao.blogserver.repository.WorksRepository;
 import cn.tjsanshao.blogserver.transfer.WorksTransfer;
 import cn.tjsanshao.blogserver.view.Works;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -34,5 +35,10 @@ public class WorksService {
             viewWorks.add(vw);
         });
         return viewWorks;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void save(cn.tjsanshao.blogserver.model.Works works) {
+        worksRepository.insert(works);
     }
 }
