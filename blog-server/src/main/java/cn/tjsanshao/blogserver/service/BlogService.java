@@ -42,4 +42,11 @@ public class BlogService {
     public void save(cn.tjsanshao.blogserver.model.Article article) {
         articleRepository.insert(article);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean hide(long id) {
+        cn.tjsanshao.blogserver.model.Article article = new cn.tjsanshao.blogserver.model.Article().setId(id).setDeleteFlag(new Short("1"));
+        int row = articleRepository.updateById(article);
+        return row > 0;
+    }
 }

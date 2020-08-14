@@ -53,4 +53,13 @@ public class PrivateController {
         worksService.save(works);
         return "success";
     }
+
+    @RequestMapping("/private/article/hide")
+    public String hideBlog(Long id) {
+        boolean result = blogService.hide(id);
+        if (result) {
+            return "success";
+        }
+        return "fail";
+    }
 }
