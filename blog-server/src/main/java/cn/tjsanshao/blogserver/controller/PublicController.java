@@ -2,25 +2,34 @@ package cn.tjsanshao.blogserver.controller;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.StrUtil;
 import cn.tjsanshao.blogserver.service.BlogService;
 import cn.tjsanshao.blogserver.service.CommentService;
 import cn.tjsanshao.blogserver.service.MainService;
 import cn.tjsanshao.blogserver.service.OtherService;
 import cn.tjsanshao.blogserver.service.WorksService;
+import cn.tjsanshao.blogserver.tools.QiniuCloudImgUploader;
 import cn.tjsanshao.blogserver.view.Article;
 import cn.tjsanshao.blogserver.view.Comment;
 import cn.tjsanshao.blogserver.view.SortCard;
 import cn.tjsanshao.blogserver.view.Works;
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -29,9 +38,13 @@ import java.util.Objects;
  * @author TjSanshao
  * @date 2020-04-07 14:43
  */
+@Slf4j
 @CrossOrigin
 @RestController
 public class PublicController {
+    @Value("${images.upload.temp.path:/app/blog/temp}")
+    private String tempPath;
+
     @Resource
     private MainService mainService;
     @Resource
@@ -42,6 +55,8 @@ public class PublicController {
     private WorksService worksService;
     @Resource
     private CommentService commentService;
+    @Resource
+    private QiniuCloudImgUploader uploader;
 
     @RequestMapping("/public/hello")
     public String hello() {
@@ -129,5 +144,24 @@ public class PublicController {
         }
         List<Comment> commentList = commentService.comments(current, pageSize);
         return JSON.toJSONString(commentList);
+    }
+
+    @RequestMapping("/public/images/upload")
+    public String testUploadImage(@RequestParam("image") MultipartFile image) {
+        String originalFilename = image.getOriginalFilename();
+        if (StrUtil.isBlank(originalFilename)) {
+            originalFilename = "random.jpg";
+        }
+        String imageName = UUID.randomUUID().toString() + originalFilename.substring(originalFilename.indexOf("."));
+        String longFileName = tempPath + File.separator + imageName;
+        log.info("saving image to path:{}", longFileName);
+        final File saveImage = new File(longFileName);
+        try {
+            image.transferTo(saveImage);
+        } catch (Exception e) {
+            log.error("save uploaded images error:{}", e.toString());
+        }
+        final Map<String, String> result = uploader.upload(imageName, longFileName);
+        return "success! The image url is:http://img.tjsanshao.top/" + result.get(QiniuCloudImgUploader.FILE_KEY);
     }
 }
